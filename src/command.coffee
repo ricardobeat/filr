@@ -131,8 +131,9 @@ downloadFile = (url, dest, callback) ->
             res.on 'data', (chunk) ->
                progress += chunk.length
                percent = (progress / size * 100).toFixed(2)
-               if percent - last > 25
+               if percent - last > 20
                     console.log "#{percent}%"
+                    last = percent
 
             png.decode res, dest, callback
 
