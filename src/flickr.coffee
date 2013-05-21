@@ -5,6 +5,18 @@ program  = require 'commander'
 {Flickr} = require 'flickr-with-uploads'
 OAuth    = require 'OAuth'
 
+# -----------------------------------------------------------------------------
+
+flickr = null
+
+createClient = (keys) ->
+    flickr = new Flickr(
+        keys.consumer_key
+        keys.consumer_secret
+        keys.token
+        keys.token_secret
+    )
+
 
 # Get OAuth tokens
 # -----------------------------------------------------------------------------
@@ -34,15 +46,7 @@ authenticate = (keys, callback) ->
 # Upload image
 # -----------------------------------------------------------------------------
 
-upload = (keys, filename, file, stats, callback) ->
-
-    flickr = new Flickr(
-        keys.consumer_key
-        keys.consumer_secret
-        keys.token
-        keys.token_secret
-    )
-
+upload = (filename, file, stats, callback) ->
     data = {
         title: path.basename(filename)
         description: "#{stats.size} bytes"
@@ -54,9 +58,18 @@ upload = (keys, filename, file, stats, callback) ->
     flickr.createRequest('upload', data, true, callback).send()
 
 
+# API
+# -----------------------------------------------------------------------------
+
+api = (endpoint, data, callback) ->
+    flickr.createRequest(endpoint, data, true, callback).send()
+
+
 # -----------------------------------------------------------------------------
 
 module.exports = {
+    createClient
     authenticate
     upload
+    api
 }

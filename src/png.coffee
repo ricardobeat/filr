@@ -29,8 +29,8 @@ encode = (file, dest, callback) ->
             decoder.emit 'data', rice.text('filedata', data.toString('hex'))
         )
         .pipe(encoder)
-        .pipe(output)
         .on('end', -> callback null, dest, stats)
+        .pipe(output)
 
 
 # Retrieve data from PNG
@@ -38,11 +38,9 @@ encode = (file, dest, callback) ->
 
 decode = (image, dest, callback) ->
 
-    dest ?= getTempFile('dat')
+    input    = if image.pipe then image else fs.createReadStream image
+    output   = null
     original = null
-
-    input  = fs.createReadStream image
-    output = fs.createWriteStream dest
 
     decoder = rice.decode()
 
@@ -50,11 +48,21 @@ decode = (image, dest, callback) ->
         .pipe(decoder)
         .on('data', (chunk) ->
             return if chunk.type() isnt 'tEXt'
-            switch chunk.key()
-                when 'filename' then original = chunk.value().toString()
-                when 'filedata' then output.write new Buffer(chunk.value().toString(), 'hex')
+
+            if chunk.key() is 'filename'
+                if !dest
+                    dest = original = chunk.value().toString()
+                    ext = path.extname(dest)
+                    # Avoid overwriting local files
+                    while fs.existsSync dest
+                        dest = "#{path.basename(original, ext)}-#{Date.now().toString(36)}#{ext}"
+                output = fs.createWriteStream dest
+
+            else if chunk.key() is 'filedata'
+                output.write new Buffer(chunk.value().toString(), 'hex')
         )
-        .on('end', -> callback null, dest, original)
+        .on 'end', ->
+            callback null, dest, original
 
 
 # -----------------------------------------------------------------------------
