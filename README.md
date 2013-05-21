@@ -5,6 +5,13 @@ Filr turns Flickr into a storage engine. Very useful now that [everyone gets 1TB
 
 <a href="http://www.youtube.com/watch?v=Z3CBFZTlwJ4&amp;vq=hd720" target="_blank"><img src="http://f.cl.ly/items/0e272s1r1j3i3k111U0i/Screen%20Shot%202013-05-21%20at%206.44.35%20AM.png" /></a>
 
+Install
+---------
+
+    npm install filr-cli -g
+
+This will put the `filr` bin in your path.
+
 Authorization
 --------------
 
