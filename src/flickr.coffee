@@ -21,13 +21,13 @@ createClient = (keys) ->
 # Get OAuth tokens
 # -----------------------------------------------------------------------------
 
-authenticate = (keys, callback) ->
+authenticate = (callback) ->
 
     oauth = new OAuth.OAuth(
         'http://www.flickr.com/services/oauth/request_token'
         'http://www.flickr.com/services/oauth/access_token'
-        keys.consumer_key
-        keys.consumer_secret
+        flickr.consumer_key
+        flickr.consumer_secret
         '1.0A'
         'oob'
         'HMAC-SHA1'

@@ -28,11 +28,6 @@ config = {}
 
 run = ->
 
-    if program.auth
-        [config.consumer_key, config.consumer_secret] = program.args
-        getTokens()
-        return
-
     [input_file, output_file] = program.args
 
     if program.encode
@@ -42,19 +37,25 @@ run = ->
 
     if program.decode
         png.decode input_file, output_file, (err, file, name) ->
-            console.log "Recovered #{file} -> #{name}"
+            console.log "Recovered #{name} -> #{file}"
         return
 
     # Methods below this need API keys
     unless config.consumer_key
         loadConfig configPath, (err) ->
             if err then return console.log(
-                "Please use filr --auth or edit #{path} to add your API keys."
+                "Please use filr --auth or edit #{configPath} to add your API keys."
             )
             run()
         return
 
     flickr.createClient(config)
+
+    if program.auth
+        config.consumer_key    = program.args[0] or config.consumer_key
+        config.consumer_secret = program.args[1] or config.consumer_secret
+        getTokens()
+        return
 
     if program.get
         downloadFile input_file, output_file, (err, file, name) ->
@@ -72,10 +73,11 @@ run = ->
 
 loadConfig = (filepath, callback) ->
     fs.readFile filepath, (err, file) ->
-        try config = JSON.parse file.toString()
+        try config2 = JSON.parse file.toString()
+        config[key] or= val for key, val of config2
 
         if !config or !config.consumer_key or !config.consumer_secret
-            callback new Error('Missing credentials')
+            callback new Error('Please supply your CONSUMER_KEY and CONSUMER_SECRET')
             return
 
         if !config.token or !config.token_secret
@@ -85,6 +87,7 @@ loadConfig = (filepath, callback) ->
         callback null
 
 getTokens = (callback) ->
+    flickr.createClient(config)
     flickr.authenticate (err, token, token_secret) ->
         if err then return callback err
         config.token = token
@@ -94,7 +97,7 @@ getTokens = (callback) ->
         callback? null
 
 saveConfig = (callback) ->
-    fs.writeFile configPath, JSON.stringify(config, null, 4), callback
+    fs.writeFileSync configPath, JSON.stringify(config, null, 4), callback
 
 
 # Encode file and upload image

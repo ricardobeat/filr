@@ -21,7 +21,7 @@ encode = (file, dest, callback) ->
     decoder = rice.decode()
     encoder = rice.encode()
 
-    fs.createReadStream('file.png')
+    fs.createReadStream(path.join(__dirname, '../file.png'))
         .pipe(decoder)
         .on('data', (chunk) ->
             return if chunk.type() isnt 'IEND'
@@ -50,8 +50,9 @@ decode = (image, dest, callback) ->
             return if chunk.type() isnt 'tEXt'
 
             if chunk.key() is 'filename'
+                original = chunk.value().toString()
                 if !dest
-                    dest = original = chunk.value().toString()
+                    dest = original
                     ext = path.extname(dest)
                     # Avoid overwriting local files
                     while fs.existsSync dest
