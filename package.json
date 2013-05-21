@@ -1,11 +1,13 @@
 {
-  "name": "flickstore",
+  "name": "filr",
   "description": "Store data as images and upload to Flickr for 1TB free storage!",
   "version": "0.1.0",
   "main": "index.js",
   "dependencies": {
     "commander": "*",
-    "chunky-rice": "*"
+    "chunky-rice": "*",
+    "oauth": "~0.9.10",
+    "flickr-with-uploads": "~0.2.2"
   },
   "devDependencies": {
     "flour": "",
@@ -13,7 +15,7 @@
     "commander": "~1.1.1"
   },
   "bin": {
-    "flickstore": "./bin/cli"
+    "filr": "./bin/cli"
   },
   "scripts": {},
   "repository": {
