@@ -7,12 +7,12 @@
     "commander": "*",
     "chunky-rice": "*",
     "oauth": "~0.9.10",
-    "flickr-with-uploads": "~0.2.2"
+    "flickr-with-uploads": "~0.2.2",
+    "request": "*"
   },
   "devDependencies": {
     "flour": "",
-    "coffee-script": "*",
-    "commander": "~1.1.1"
+    "coffee-script": "*"
   },
   "bin": {
     "filr": "./bin/cli"
