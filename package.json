@@ -1,0 +1,25 @@
+{
+  "name": "flickstore",
+  "description": "Store data as images and upload to Flickr for 1TB free storage!",
+  "version": "0.1.0",
+  "main": "index.js",
+  "dependencies": {
+    "commander": "*",
+    "chunky-rice": "*"
+  },
+  "devDependencies": {
+    "flour": "",
+    "coffee-script": "*",
+    "commander": "~1.1.1"
+  },
+  "bin": {
+    "flickstore": "./bin/cli"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ricardobeat/project.git"
+  },
+  "author": "Ricardo Tomasi",
+  "license": "MIT (ricardo.mit-license.org)"
+}
