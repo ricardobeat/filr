@@ -40,6 +40,14 @@ run = ->
             console.log "Recovered #{name} -> #{file}"
         return
 
+    if program.auth
+        [config.consumer_key, config.consumer_secret] = program.args
+        getTokens (err) ->
+            return unless err
+            console.log "Failed to obtain access token.\n#{JSON.stringify(config, null, 4)}"
+            console.log err
+        return
+
     # Methods below this need API keys
     unless config.consumer_key
         loadConfig configPath, (err) ->
@@ -50,12 +58,6 @@ run = ->
         return
 
     flickr.createClient(config)
-
-    if program.auth
-        config.consumer_key    = program.args[0] or config.consumer_key
-        config.consumer_secret = program.args[1] or config.consumer_secret
-        getTokens()
-        return
 
     if program.get
         downloadFile input_file, output_file, (err, file, name) ->
