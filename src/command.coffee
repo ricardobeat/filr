@@ -111,7 +111,7 @@ uploadFile = (input) ->
         flickr.upload input, file, stats, (err, res) ->
             if err or res.stat isnt 'ok'
                 return console.log "Error uploading file."
-            console.log "#{file} upload completed. Photo ID: #{res.photoid}"
+            console.log "#{input} uploaded. Photo ID: #{res.photoid}"
 
 
 # Download image and decode back to file
