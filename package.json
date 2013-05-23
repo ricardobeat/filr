@@ -1,7 +1,7 @@
 {
   "name": "filr-cli",
   "description": "Store data as images and upload to Flickr for 1TB free storage!",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "index.js",
   "dependencies": {
     "commander": "*",
