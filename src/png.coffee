@@ -28,8 +28,8 @@ encode = (file, dest, callback) ->
             decoder.emit 'data', rice.text('filename', path.basename(file))
             decoder.emit 'data', rice.text('filedata', data.toString('hex'))
         )
-        .pipe(encoder)
         .on('end', -> callback null, dest, stats)
+        .pipe(encoder)
         .pipe(output)
 
 
