@@ -18,7 +18,8 @@
     "filr": "./bin/cli"
   },
   "scripts": {
-    "watch": "cake watch"
+    "watch": "cake watch",
+    "prepublish": "cake build"
   },
   "repository": {
     "type": "git",
