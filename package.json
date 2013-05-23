@@ -17,7 +17,9 @@
   "bin": {
     "filr": "./bin/cli"
   },
-  "scripts": {},
+  "scripts": {
+    "watch": "cake watch"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/ricardobeat/filr.git"
