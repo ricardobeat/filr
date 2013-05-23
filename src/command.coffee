@@ -65,7 +65,7 @@ run = ->
             console.log "Recovered #{name} -> #{file}"
 
     if program.args.length
-        uploadFile(input_file) for file in program.args
+        uploadFile(file) for file in program.args
     else
         program.help()
 
