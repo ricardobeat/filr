@@ -20,7 +20,15 @@ First, create an app at http://www.flickr.com/services/apps/create/ and take not
     # Add your keys
     filr --auth CONSUMER_KEY CONSUMER_SECRET
 
-Complete the OAuth flow to obtain access tokens. Filr will attempt to open a browser for you, just enter the resulting PIN on the prompt that follows. Tokens are persisted to `$HOME/.filr`.
+Alternatively, manually create a `.filr` file in your `$HOME` folder, containing a json object with the `consumer_key` and `consumer_secret` keys:
+
+    // these are fake keys, obviously
+    {
+        "consumer_key": "f0d87f09a8sd7f8a08f7a",
+        "consumer_secret": "8f7dsa807fa98"
+    }
+
+Complete the OAuth flow to obtain access tokens. Filr will attempt to open a browser for you, just enter the resulting PIN on the prompt that follows. Tokens are persisted to `$HOME/.filr` as `token` and `token_secret`.
 
 Uploading
 ----------
@@ -47,6 +55,15 @@ Files are encoded as hex strings and saved as a tEXt chunk inside the PNG, so th
 Unfortunately this method is very wasteful, resulting in file sizes 2-4x the original. PNG does support "zEXt" chunks which are compressed using zlib, but the libraries being used here don't. Even better (and more cool) would be to save data in the image itself [as seen here](http://blog.nihilogic.dk/2008/05/compression-using-canvas-and-png.html).
 
 There is probably a restriction on chunk sizes that will cause this to break on larger files, I have only tested up to 15mb.
+
+Development
+------------
+
+    git clone gh:ricardobeat/filr.git
+    cd filr
+    npm install
+
+Run `cake watch` (or `npm run watch` if you don't have coffeescript globally installed) to continuously build the coffee-script source.
 
 To-do
 -----
